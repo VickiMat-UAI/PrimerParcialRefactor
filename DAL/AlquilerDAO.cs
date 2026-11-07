@@ -1,4 +1,5 @@
 ﻿using Entity;
+using Mapper;
 using Microsoft.Data.SqlClient;
 using System.Configuration;
 
@@ -6,10 +7,10 @@ namespace DAL;
 
 public class AlquilerDAO
 {
+    private string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
+    private TipoBicicletaDAO tipoBicicletaDAO = new TipoBicicletaDAO();
     public void eliminarAlquiler(int idAlquiler)
     {
-        string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
-
         try
         {
             using (SqlConnection con = new SqlConnection(conectionString))
@@ -31,8 +32,6 @@ public class AlquilerDAO
 
     public void modificarAlquiler(Alquiler alquiler)
     {
-        string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
-
         try
         {
             using (SqlConnection con = new SqlConnection(conectionString))
@@ -59,7 +58,6 @@ public class AlquilerDAO
         try
         {
             List<Alquiler> lista = new List<Alquiler>();
-            string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conectionString))
             {
@@ -71,16 +69,10 @@ public class AlquilerDAO
                     {
                         while (reader.Read())
                         {
-                            Alquiler alquiler = new Alquiler
-                            {
-                                NumeroAlquiler = Convert.ToInt32(reader["NUMERO_ALQUILER"].ToString()),
-                                IdTipoBicicleta = Convert.ToInt32(reader["ID_TIPO_BICICLETA"].ToString()),
-                                DniCliente = reader["DNI_CLIENTE"].ToString(),
-                                ImporteTotal = Convert.ToDecimal(reader["IMPORTE_TOTAL"].ToString()),
-                                FechaRegistro = Convert.ToDateTime(reader["FECHA_REGISTRO"].ToString()),
-                                FechaAlquiler = Convert.ToDateTime(reader["FECHA_ALQUILER"].ToString())
-                            };
-                            lista.Add(alquiler);
+                            int idTipo = Convert.ToInt32(reader["TIPO_BICICLETA"]);
+                            TipoBicicleta tipoObj = tipoBicicletaDAO.ObtenerPorId(idTipo);
+
+                            lista.Add(AlquilerMapper.Map(reader, tipoObj));
                         }
                     }
                 }
@@ -95,8 +87,6 @@ public class AlquilerDAO
 
     public void guardarAlquiler(Alquiler alquiler)
     {
-        string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
-
         try
         {
             using (SqlConnection connection = new SqlConnection(conectionString))
@@ -105,11 +95,12 @@ public class AlquilerDAO
                 string insertQuery = "INSERT INTO Alquiler (ID_TIPO_BICICLETA, DNI_CLIENTE, IMPORTE_TOTAL, FECHA_REGISTRO, FECHA_ALQUILER) VALUES(@IdTipoBicicleta, @DniCliente, @ImporteTotal, @FechaRegistro, @FechaAlquiler)";
                 using (SqlCommand command = new SqlCommand(insertQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@IdTipoBicicleta", alquiler.IdTipoBicicleta);
                     command.Parameters.AddWithValue("@DniCliente", alquiler.DniCliente);
                     command.Parameters.AddWithValue("@ImporteTotal", alquiler.ImporteTotal);
                     command.Parameters.AddWithValue("@FechaRegistro", alquiler.FechaRegistro);
                     command.Parameters.AddWithValue("@FechaAlquiler", alquiler.FechaAlquiler);
+
+                    command.Parameters.AddWithValue("@IdTipo", alquiler.TipoBicicleta.IdTipoBicicleta);
                     command.ExecuteNonQuery();
                 }
             }
@@ -125,7 +116,6 @@ public class AlquilerDAO
         try
         {
             Alquiler alquiler = null;
-            string conectionString = ConfigurationManager.ConnectionStrings["ParcialConection"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(conectionString))
             {
@@ -139,15 +129,10 @@ public class AlquilerDAO
                     {
                         if (reader.Read())
                         {
-                            alquiler = new Alquiler
-                            {
-                                NumeroAlquiler = Convert.ToInt32(reader["NUMERO_ALQUILER"].ToString()),
-                                IdTipoBicicleta = Convert.ToInt32(reader["ID_TIPO_BICICLETA"].ToString()),
-                                DniCliente = reader["DNI_CLIENTE"].ToString(),
-                                ImporteTotal = Convert.ToDecimal(reader["IMPORTE_TOTAL"].ToString()),
-                                FechaRegistro = Convert.ToDateTime(reader["FECHA_REGISTRO"].ToString()),
-                                FechaAlquiler = Convert.ToDateTime(reader["FECHA_ALQUILER"].ToString()),
-                            };
+                            int idTipo = Convert.ToInt32(reader["TIPO_BICICLETA"]);
+                            TipoBicicleta tipoObj = tipoBicicletaDAO.ObtenerPorId(idTipo);
+
+                            alquiler = AlquilerMapper.Map(reader, tipoObj);
                         }
                     }
                 }
