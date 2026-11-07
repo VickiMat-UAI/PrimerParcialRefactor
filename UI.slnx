@@ -2,5 +2,6 @@
   <Project Path="BLL/BLL.csproj" />
   <Project Path="DAL/DAL.csproj" />
   <Project Path="Entity/Entity.csproj" />
+  <Project Path="Mapper/Mapper.csproj" Id="694e73e2-e685-47ad-8ec1-72908464b813" />
   <Project Path="UI/UI.csproj" />
 </Solution>
