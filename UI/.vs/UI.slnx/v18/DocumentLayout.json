@@ -1,0 +1,68 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\UI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E99E70EF-1A92-C6B6-DA18-F577D579199B}|..\\Entity\\Entity.csproj|c:\\users\\vicki\\onedrive\\documentos\\uai\\lug\\primerparcial\\entity\\alquiler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E99E70EF-1A92-C6B6-DA18-F577D579199B}|..\\Entity\\Entity.csproj|c:\\users\\vicki\\onedrive\\documentos\\uai\\lug\\primerparcial\\entity\\tipobicicleta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{344A1172-B978-A3CB-44BF-B15E6902C6C7}|UI.csproj|c:\\users\\vicki\\onedrive\\documentos\\uai\\lug\\primerparcial\\ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{344A1172-B978-A3CB-44BF-B15E6902C6C7}|UI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Alquiler.cs",
+              "DocumentMoniker": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\Entity\\Alquiler.cs",
+              "RelativeDocumentMoniker": "..\\Entity\\Alquiler.cs",
+              "ToolTip": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\Entity\\Alquiler.cs",
+              "RelativeToolTip": "..\\Entity\\Alquiler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-07T21:49:08.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TipoBicicleta.cs",
+              "DocumentMoniker": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\Entity\\TipoBicicleta.cs",
+              "RelativeDocumentMoniker": "..\\Entity\\TipoBicicleta.cs",
+              "ToolTip": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\Entity\\TipoBicicleta.cs",
+              "RelativeToolTip": "..\\Entity\\TipoBicicleta.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-27T19:28:47.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\UI\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\vicki\\OneDrive\\Documentos\\UAI\\LUG\\PrimerParcial\\UI\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-27T19:04:40.282Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
