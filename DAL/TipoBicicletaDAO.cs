@@ -46,7 +46,7 @@ public class TipoBicicletaDAO
         using (SqlConnection sqlConnection = new SqlConnection(conectionString))
         {
             sqlConnection.Open();
-            string sql = "SELECT * FROM TIPO_BICICLETA WHERE ID_TIPO_BICICLETA = @Id";
+            string sql = "SELECT * FROM TipoBicicleta WHERE ID_TIPO_BICICLETA = @Id";
             using (SqlCommand sqlCommand = new SqlCommand(sql, sqlConnection))
             {
                 sqlCommand.Parameters.AddWithValue("@Id", id);

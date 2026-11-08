@@ -11,6 +11,8 @@ public class Alquiler
 
     public DateTime FechaAlquiler { get; set; }
 
+    public string DescripcionTipoBicicleta { get => TipoBicicleta?.Descripcion ?? string.Empty; }
+
     public TipoBicicleta TipoBicicleta { get; set; }
 
 }

@@ -69,7 +69,7 @@ public class AlquilerDAO
                     {
                         while (reader.Read())
                         {
-                            int idTipo = Convert.ToInt32(reader["TIPO_BICICLETA"]);
+                            int idTipo = Convert.ToInt32(reader["ID_TIPO_BICICLETA"]);
                             TipoBicicleta tipoObj = tipoBicicletaDAO.ObtenerPorId(idTipo);
 
                             lista.Add(AlquilerMapper.Map(reader, tipoObj));
@@ -100,7 +100,7 @@ public class AlquilerDAO
                     command.Parameters.AddWithValue("@FechaRegistro", alquiler.FechaRegistro);
                     command.Parameters.AddWithValue("@FechaAlquiler", alquiler.FechaAlquiler);
 
-                    command.Parameters.AddWithValue("@IdTipo", alquiler.TipoBicicleta.IdTipoBicicleta);
+                    command.Parameters.AddWithValue("@IdTipoBicicleta", alquiler.TipoBicicleta.IdTipoBicicleta);
                     command.ExecuteNonQuery();
                 }
             }
@@ -129,7 +129,7 @@ public class AlquilerDAO
                     {
                         if (reader.Read())
                         {
-                            int idTipo = Convert.ToInt32(reader["TIPO_BICICLETA"]);
+                            int idTipo = Convert.ToInt32(reader["ID_TIPO_BICICLETA"]);
                             TipoBicicleta tipoObj = tipoBicicletaDAO.ObtenerPorId(idTipo);
 
                             alquiler = AlquilerMapper.Map(reader, tipoObj);

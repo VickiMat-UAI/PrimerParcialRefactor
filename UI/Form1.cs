@@ -7,6 +7,7 @@ public partial class Form1 : Form
 {
     private AlquilerBusiness alquilerBusiness = new AlquilerBusiness();
     private TipoBicicletaBusiness tipoBicicletaBusiness = new TipoBicicletaBusiness();
+    private List<Alquiler> listaBorrador = new List<Alquiler>();
     public Form1()
     {
         InitializeComponent();
@@ -30,13 +31,13 @@ public partial class Form1 : Form
 
             Alquiler nuevo = new Alquiler
             {
-                IdTipoBicicleta = Convert.ToInt32(cbTipoBicicleta.SelectedValue),
+                TipoBicicleta = (TipoBicicleta)cbTipoBicicleta.SelectedItem,
                 DniCliente = txtDniCliente.Text.Trim(),
                 ImporteTotal = importe,
                 FechaAlquiler = dtpFechaAlquiler.Value
             };
 
-            alquilerBusiness.guardarAlquiler(nuevo);
+            alquilerBusiness.guardarAlquilerIndividual(nuevo);
 
             MessageBox.Show("Alquiler registrado con éxito.", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -62,9 +63,16 @@ public partial class Form1 : Form
 
     private void CargarTiposBicicleta()
     {
-        cbTipoBicicleta.DataSource = tipoBicicletaBusiness.getAll();
-        cbTipoBicicleta.DisplayMember = "Descripcion";
-        cbTipoBicicleta.ValueMember = "IdTipoBicicleta";
+        try
+        {
+            cbTipoBicicleta.DataSource = tipoBicicletaBusiness.getAll();
+            cbTipoBicicleta.DisplayMember = "Descripcion";
+            cbTipoBicicleta.ValueMember = "IdTipoBicicleta";
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error al cargar los tipos de bicicleta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private void ActualizarGrilla()
@@ -141,6 +149,70 @@ public partial class Form1 : Form
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void btnBorrador_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (cbTipoBicicleta.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe seleccionar un tipo de bicicleta.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!decimal.TryParse(txtImporteTotal.Text.Trim(), out decimal importe))
+            {
+                MessageBox.Show("Ingrese un importe numérico válido.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Alquiler nuevo = new Alquiler
+            {
+                TipoBicicleta = (TipoBicicleta)cbTipoBicicleta.SelectedItem,
+                DniCliente = txtDniCliente.Text.Trim(),
+                ImporteTotal = importe,
+                FechaAlquiler = dtpFechaAlquiler.Value,
+                FechaRegistro = DateTime.Now
+            };
+
+            listaBorrador.Add(nuevo);
+
+
+            txtDniCliente.Clear();
+            txtImporteTotal.Clear();
+            cbTipoBicicleta.SelectedIndex = -1;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+    }
+
+    private void btnConfirmar_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (listaBorrador.Count == 0)
+            {
+                MessageBox.Show("El borrador está vacío. Agregue alquileres primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            alquilerBusiness.guardarBorrador(listaBorrador);
+
+            MessageBox.Show("¡Todos los alquileres del borrador fueron guardados con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            listaBorrador.Clear();
+
+            dgvAlquileres.DataSource = null;
+            dgvAlquileres.DataSource = alquilerBusiness.getAll();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Se revirtió la operación debido a un error de validación:\n\n" + ex.Message, "Error Transaccional", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

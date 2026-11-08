@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            btnConfirmar = new Button();
+            btnBorrador = new Button();
             btnAlta = new Button();
             dtpFechaAlquiler = new DateTimePicker();
             label3 = new Label();
@@ -59,6 +61,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btnConfirmar);
+            groupBox1.Controls.Add(btnBorrador);
             groupBox1.Controls.Add(btnAlta);
             groupBox1.Controls.Add(dtpFechaAlquiler);
             groupBox1.Controls.Add(label3);
@@ -70,14 +74,34 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 47);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(332, 268);
+            groupBox1.Size = new Size(332, 329);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Nuevo Alquiler";
             // 
+            // btnConfirmar
+            // 
+            btnConfirmar.Location = new Point(212, 258);
+            btnConfirmar.Name = "btnConfirmar";
+            btnConfirmar.Size = new Size(96, 40);
+            btnConfirmar.TabIndex = 10;
+            btnConfirmar.Text = "Confirmar borrador";
+            btnConfirmar.UseVisualStyleBackColor = true;
+            btnConfirmar.Click += btnConfirmar_Click;
+            // 
+            // btnBorrador
+            // 
+            btnBorrador.Location = new Point(64, 258);
+            btnBorrador.Name = "btnBorrador";
+            btnBorrador.Size = new Size(97, 40);
+            btnBorrador.TabIndex = 9;
+            btnBorrador.Text = "Agregar Borrador";
+            btnBorrador.UseVisualStyleBackColor = true;
+            btnBorrador.Click += btnBorrador_Click;
+            // 
             // btnAlta
             // 
-            btnAlta.Location = new Point(115, 212);
+            btnAlta.Location = new Point(119, 198);
             btnAlta.Name = "btnAlta";
             btnAlta.Size = new Size(76, 40);
             btnAlta.TabIndex = 8;
@@ -250,7 +274,7 @@
             groupBox2.Controls.Add(txtIdEliminar);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(btnEliminar);
-            groupBox2.Location = new Point(12, 357);
+            groupBox2.Location = new Point(24, 404);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(332, 197);
             groupBox2.TabIndex = 12;
@@ -320,5 +344,7 @@
         private DateTimePicker dtpNuevaFecha;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
+        private Button btnConfirmar;
+        private Button btnBorrador;
     }
 }

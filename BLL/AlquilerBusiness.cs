@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Entity;
+using System.Transactions;
 
 namespace BLL;
 
@@ -7,39 +8,64 @@ public class AlquilerBusiness
 {
     private AlquilerDAO alquilerDAO = new AlquilerDAO();
 
-    public void guardarAlquiler(Alquiler alquiler)
+    private void validarAlquiler(Alquiler alquiler)
+    {
+        if (string.IsNullOrWhiteSpace(alquiler.DniCliente))
+        {
+            throw new Exception("El número de DNI del cliente no puede estar vacío.");
+        }
+        if (alquiler.DniCliente.Trim().Length <= 5)
+        {
+            throw new Exception("El número de DNI del cliente debe tener más de 5 caracteres.");
+        }
+        if (alquiler.TipoBicicleta == null || alquiler.TipoBicicleta.IdTipoBicicleta <= 0)
+        {
+            throw new Exception("Debe seleccionar un tipo de bicicleta.");
+        }
+        if (alquiler.ImporteTotal <= 0)
+        {
+            throw new Exception("El importe total del alquiler no puede ser igual o menor a cero.");
+        }
+        if (alquiler.FechaAlquiler.Date < DateTime.Today)
+        {
+            throw new Exception("La fecha del alquiler no puede ser menor a la fecha actual del sistema.");
+        }
+    }
+
+    public void guardarAlquilerIndividual(Alquiler alquiler)
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(alquiler.DniCliente))
-            {
-                throw new Exception("El número de DNI del cliente no puede estar vacío.");
-            }
-
-            if (alquiler.DniCliente.Trim().Length <= 5)
-            {
-                throw new Exception("El número de DNI del cliente debe tener más de 5 caracteres.");
-            }
-
-            if (alquiler.IdTipoBicicleta <= 0)
-            {
-                throw new Exception("Debe seleccionar un tipo de bicicleta.");
-            }
-
-            if (alquiler.ImporteTotal <= 0)
-            {
-                throw new Exception("El importe total del alquiler no puede ser igual o menor a cero.");
-            }
-
-            if (alquiler.FechaAlquiler.Date < DateTime.Today)
-            {
-                throw new Exception("La fecha del alquiler no puede ser menor a la fecha actual del sistema.");
-            }
-
+            validarAlquiler(alquiler);
             alquiler.FechaRegistro = DateTime.Now;
 
             alquilerDAO.guardarAlquiler(alquiler);
 
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public void guardarBorrador(List<Alquiler> listaBorrador)
+    {
+        try
+        {
+            if (listaBorrador == null || listaBorrador.Count == 0)
+            {
+                throw new Exception("El borrador se encuentra vacío.");
+            }
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                foreach (Alquiler alq in listaBorrador)
+                {
+                    validarAlquiler(alq);
+                    alquilerDAO.guardarAlquiler(alq);
+                }
+                scope.Complete();
+            }
         }
         catch (Exception ex)
         {
